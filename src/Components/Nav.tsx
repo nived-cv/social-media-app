@@ -8,6 +8,6 @@ export const Nav = () =>{
         
         <NavLink to="/home">Home</NavLink>
         <NavLink to="/home">About</NavLink>
-        <NavLink to="/home">Users</NavLink>
+        <NavLink to="/users">Users</NavLink>
     </div>
 }
