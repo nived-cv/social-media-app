@@ -1,0 +1,21 @@
+
+
+.Nav{
+    display:flex;
+    justify-content:space-around;
+    background-color: rebeccapurple;
+    padding: 10px;
+    color:white;
+    font-weight:bold;
+}
+
+.Nav a{
+    
+    color:white;
+    font-weight:bold;
+    text-decoration:none;
+}
+
+/* .Nav a:active{
+    background-color: aqua;
+} */
