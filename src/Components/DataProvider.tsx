@@ -1,37 +1,46 @@
 
-import { QueryClient, QueryClientProvider, useQuery} from 'react-query'
+import axios from 'axios'
+import { QueryClient, QueryClientProvider, useQuery, useQueryClient } from 'react-query'
 
-type Props ={
-    children : React.ReactNode
+type Props = {
+    children: React.ReactNode
 }
 
-const fetchUsers = async() =>{
+const fetchUsers = async () => {
 
-    const data = await fetch("https://gorest.co.in/public/v2/users")
-    return data.json()
+    const data = await axios.get("https://gorest.co.in/public/v2/users")
+    return data.data
 }
 
-const fetchPosts = async() =>{
+const fetchPosts = async () => {
 
-    const data = await fetch("https://gorest.co.in/public/v2/posts")
-    return data.json()
+    const data = await axios.get("https://gorest.co.in/public/v2/posts")
+    return data.data
 }
 
 const fetchComments = async() =>{
-
-    const data = await fetch("https://gorest.co.in/public/v2/comments")
-    return data.json()
+    const data = await axios.get(`https://gorest.co.in/public/v2/comments`)
+    return data.data
 }
 
-export const useUsers = () => useQuery("users",fetchUsers)
-export const usePosts = () => useQuery("posts",fetchPosts)
-export const useComments = () => useQuery("comments",fetchComments)
+// const fetchComments = async(id:number) =>{
+//     const data = await axios.get(`https://gorest.co.in/public/v2/posts/${id}/comments`)
+//     return data.data
+// }
 
-const DataProvider = ({children}:Props) =>{
+
+export const useUsers = () => useQuery("users", fetchUsers)
+export const usePosts = () => useQuery("posts", fetchPosts)
+export const useComments = () =>  useQuery('comments', fetchComments)
+//export const useComments = (id: number) =>  useQuery('comments', () => fetchComments(id))
+
+        
+
+const DataProvider = ({ children }: Props) => {
 
     const queryClient = new QueryClient()
 
-    return <QueryClientProvider client = {queryClient}>
+    return <QueryClientProvider client={queryClient}>
 
         {children}
 

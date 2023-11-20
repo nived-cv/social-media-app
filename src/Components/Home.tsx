@@ -1,18 +1,31 @@
 
 import { useRef } from "react"
-import { PostData } from "../CommonTypes/TypesList1"
-import { usePosts } from "./DataProvider"
+import { CommentsData, PostData } from "../CommonTypes/TypesList1"
+import { useComments, usePosts } from "./DataProvider"
 import { Post } from "./Post"
 
 export const Home = () =>{
 
     const {data,status} = usePosts()
+    const {data : comments, status : cstatus} = useComments()
 
-    const renderPosts = (data : PostData[]) =>{
-        return data?.map((post:PostData) => <Post post = {post}/>)
+    const getComment = (id : Number) =>{
+
+        const res = comments.find((comment : CommentsData) => comment.post_id === id)
+        return res
     }
 
+    const renderPosts = (data : PostData[]) =>{
+
+        return data?.map((post:PostData) => {
+            
+            const comments = getComment(post.id)
+            return <Post post = {post} comments = {comments} key = {String(post.id)}/>
+    })}
+
     const createPost = () =>{
+
+        // 681df0d2e2bf3d0b32bcdadc32c20111382302737816d60d7aef8c1816eb0918
 
     }
 
@@ -21,7 +34,6 @@ export const Home = () =>{
         // const titleRef = useRef <HTMLInputElement> (null)
         // const bodyRef = useRef <HTMLInputElement> (null)
         // const userIdRef = useRef <HTMLInputElement> (null)
-        
 
         return(
             
@@ -45,7 +57,7 @@ export const Home = () =>{
 
         <div className = "Home">
             
-            { status === "success" ? renderPosts(data) : "loading..." }
+            { status === "success" && cstatus === "success" ? renderPosts(data) : "loading..." }
 
         </div>
     )

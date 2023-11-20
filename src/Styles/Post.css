@@ -11,3 +11,11 @@
     margin-inline:auto;
 
 }
+
+.post-comments{
+    color:blue;
+}
+
+.post-comments.show{
+    display:flex;
+}
