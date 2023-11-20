@@ -15,8 +15,8 @@ export const User = ({user}:Props) =>{
                 <span className = "user-name"> {user.name} </span>
                 <span className = {`indicator ${user.status}`} >{user.status}</span>
             </p>
-            <p>{user.gender}</p>
-            <p>{user.email}</p>
+            <p> {user.gender} </p>
+            <p> {user.email} </p>
         </div>
     )
 }

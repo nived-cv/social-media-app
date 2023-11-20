@@ -2,7 +2,7 @@ import { BrowserRouter, Route, Routes } from "react-router-dom"
 import { Home } from "./Components/Home"
 import { Nav } from "./Components/Nav"
 import { PageNotFound } from "./Components/PageNotFound"
-import DataProvider from "./Components/DataProvider"
+import DataProvider from "./Components/Apis"
 import { UsersSection } from "./Components/UsersSection"
 
 

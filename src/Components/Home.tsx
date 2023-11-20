@@ -1,7 +1,7 @@
 
 import { useRef } from "react"
-import { CommentsData, PostData } from "../CommonTypes/TypesList1"
-import { useComments, usePosts } from "./DataProvider"
+import { PostData } from "../CommonTypes/TypesList1"
+import { usePosts } from "./Apis"
 import { Post } from "./Post"
 
 export const Home = () =>{
