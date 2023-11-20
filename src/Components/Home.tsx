@@ -7,21 +7,10 @@ import { Post } from "./Post"
 export const Home = () =>{
 
     const {data,status} = usePosts()
-    const {data : comments, status : cstatus} = useComments()
-
-    const getComment = (id : Number) =>{
-
-        const res = comments.find((comment : CommentsData) => comment.post_id === id)
-        return res
-    }
 
     const renderPosts = (data : PostData[]) =>{
-
-        return data?.map((post:PostData) => {
-            
-            const comments = getComment(post.id)
-            return <Post post = {post} comments = {comments} key = {String(post.id)}/>
-    })}
+        return data?.map((post:PostData) =>  <Post post = {post}  key = {String(post.id)}/>)
+    }
 
     const createPost = () =>{
 
@@ -57,7 +46,7 @@ export const Home = () =>{
 
         <div className = "Home">
             
-            { status === "success" && cstatus === "success" ? renderPosts(data) : "loading..." }
+            { status === "success" ? renderPosts(data) : "loading..." }
 
         </div>
     )

@@ -6,15 +6,22 @@ import { useComments } from "./DataProvider"
 
 type Props = {
     post: PostData
-    comments : CommentsData;
 }
 
-export const Post = ({ post,comments }: Props) => {
+export const Post = ({ post }: Props) => {
 
-    //const { data: comments} = useComments(post?.id)
-
+    const { data: CommentsData} = useComments(post?.id)
     const commentsRef = useRef<HTMLDivElement>(null)
     const handleClick = () => commentsRef.current!.classList.toggle('show')
+
+    const renderComments = () =>{
+
+        console.log(CommentsData)
+        if (CommentsData)
+        return CommentsData.map((comment:CommentsData) => <p className = "comment"> { comment.body } </p>)
+
+        return <p className = "comment"> Be the first to comment </p>
+    }
 
     return (
 
@@ -24,7 +31,7 @@ export const Post = ({ post,comments }: Props) => {
 
             <div className="post-comments" ref={commentsRef}>
 
-                    {comments ? comments.body : "be the first to add comment"}
+                    { CommentsData && renderComments() }
                 
             </div>
         </div >
