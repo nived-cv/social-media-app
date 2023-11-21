@@ -1,6 +1,6 @@
 
 import { useRef, useState } from "react"
-import { CommentsData, PostData } from "../CommonTypes/TypesList1"
+import { PostData } from "../CommonTypes/TypesList1"
 import "../Styles/Post.css"
 import { useComments } from "./Apis"
 import { RenderComments } from "./RenderComments"
