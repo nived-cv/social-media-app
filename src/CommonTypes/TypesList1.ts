@@ -7,6 +7,15 @@ export type PostData = {
      body : String
 }
 
+export type NewPostType = {
+    
+     id : number,
+     user_id : number,
+     user : String,
+     title : String,
+     body : String
+}
+
 export type PatchPost = {
      
      id? : number,

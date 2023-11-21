@@ -17,9 +17,9 @@ export const reducerUser = (state : UserData , action : Action ) => {
                        return {...state}
         case "email" : state.email = action.payload
                        return {...state}
-        case "gender" : state.email = action.payload
+        case "gender" : state.gender = action.payload as "male" || "female"
                        return {...state}
-        case "status" : state.email = action.payload
+        case "status" : state.status = action.payload
                        return {...state}
         default : return {...state}
     }
@@ -30,7 +30,7 @@ export const UsersSection = () =>{
     const {data,status} = useUsers()
     const [filter,SetFilter] = useState<String>("all")
     const [display , setDisplay] = useState <boolean> (false)
-    const [userData , dispatch] = useReducer <Reducer<UserData, Action>> (reducerUser , {id : 0,} as UserData )
+    const [userData , dispatch] = useReducer <Reducer<UserData, Action>> (reducerUser , {id : 5746762,} as UserData )
     const mutation = useAddUser()
 
     const renderUsers = (data : UserData[], filter : String) =>{
@@ -50,9 +50,6 @@ export const UsersSection = () =>{
 
         mutation.mutate(userData)
         setDisplay(!display)
-        userData.email = ""
-        userData.name = ""
-        userData.status = ""
     }
     
     return <DataProvider>
@@ -85,10 +82,10 @@ export const UsersSection = () =>{
                 <input type = "radio" name = "gender" value = "female"
                     onClick = { (e)=> dispatch({"type" : "gender" , payload : e.currentTarget.value}) } 
                     required /> female
-                <input type = "radio" name = "gender" value = "active" 
+                <input type = "radio" name = "active" value = "active" 
                     onClick = { (e)=> dispatch({type : "status" , payload : e.currentTarget.value}) } 
                     required /> active
-                <input type = "radio" name = "gender" value = "inactive"
+                <input type = "radio" name = "inactive" value = "inactive"
                     onClick = { (e)=> dispatch({"type" : "status" , payload : e.currentTarget.value}) } 
                     required /> inactive
 

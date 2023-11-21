@@ -41,6 +41,7 @@ export const RenderComments = ({post} : Props) =>{
         return <div>
                     <p className = "comment" > Be the first to comment </p>
                     <input type = "text" placeholder = "comment..." ref = {commentObj}/>
+                    <button onClick = { postComment } > Send </button>
                 </div>
     }
     return <div></div>

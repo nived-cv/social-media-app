@@ -1,11 +1,11 @@
 
-import { Reducer, useReducer, useRef, useState } from "react"
-import { PostData } from "../CommonTypes/TypesList1"
+import { Reducer, useReducer, useState } from "react"
+import { NewPostType, PostData } from "../CommonTypes/TypesList1"
 import { useAddPost, usePosts } from "./Apis"
 import { Post } from "./Post"
 import { Action } from "./UsersSection"
 
-const reducer = (state : PostData , action : Action) => {
+const reducer = (state : NewPostType , action : Action) => {
 
     switch(action.type){
 
@@ -17,13 +17,21 @@ const reducer = (state : PostData , action : Action) => {
     }
 }
 
+const initialState = {
+    id: 187187,
+    user_id: 5766243,
+    user: "User0",
+    title: "",
+    body: "",
+}
+
 export const Home = () =>{
 
     const {data,status} = usePosts()
     const [display, setDisplay] = useState <boolean> (false)
     const mutation = useAddPost()
 
-    const [postData, dispatch] = useReducer<Reducer <PostData , Action>>(reducer , {id : 0, user_id : 187187} as PostData)
+    const [postData, dispatch] = useReducer<Reducer <NewPostType , Action>>(reducer , initialState)
 
     const renderPosts = (data : PostData[]) =>{
         return data?.map((post:PostData) =>  <Post post = {post}  key = {String(post.id)}/>)
@@ -32,8 +40,6 @@ export const Home = () =>{
     const createPost = () =>{
 
         mutation.mutate(postData)
-        postData.title = ""
-        postData.body = ""
     }
 
     return(
@@ -53,7 +59,7 @@ export const Home = () =>{
                     onChange = { (e)=> dispatch({type : "body" , payload : e.target.value}) } 
                     placeholder=" say something" required />
         
-                <button type = "submit" onSubmit = {createPost}> Create</button>
+                <button type = "submit" onClick = {createPost}> Create</button>
                 <button onClick = {() => setDisplay(!display)}> Cancel</button>
             </div>
             }

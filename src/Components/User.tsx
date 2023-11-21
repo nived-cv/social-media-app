@@ -17,30 +17,28 @@ const reducer = (state : PatchUser , action : Action ) => {
                        return {...state}
         case "email" : state.email = action.payload
                        return {...state}
-        case "gender" : state.email = action.payload
+        case "gender" : state.gender = action.payload as "male" || "female"
                        return {...state}
-        case "status" : state.email = action.payload
+        case "status" : state.status = action.payload
                        return {...state}
         default : return {...state}
     }
 }
 
 export const User = ({user}:Props) =>{
-
+    
+    const initialValue = {id : user.id}
     const [display, setDisplay] = useState <boolean> (false)
-    const [userData, dispatch] = useReducer<Reducer<PatchUser,Action>>(reducer,{} as PatchUser)
+    const [userData, dispatch] = useReducer<Reducer<PatchUser,Action>>(reducer,initialValue)
     const mutation = usePatchUser()
 
     const patchUser = () => {
         mutation.mutate(userData)
         setDisplay(!display)
-        userData.email = ""
-        userData.name = ""
-        userData.status = ""
     }
 
     return (
-        <div className = "user" key = {Number(user.id)}>
+        <div className = "user" key = {Number(user.id)} >
             <button onClick = {() => setDisplay(!display)}>edit</button>
 
             <p>
@@ -50,24 +48,24 @@ export const User = ({user}:Props) =>{
             <p> {user.gender} </p>
             <p> {user.email} </p>
 
-            {display && 
+            { display && 
             <div className = "user-modify-form">
             <input type = "text" name = "name" 
                 onChange = { (e)=> dispatch({type : "name" , payload : e.target.value}) } 
-                placeholder="enter name" required />
+                placeholder="enter name" defaultValue = {String(user.name)} required />
             <input type = "text" name = "email" 
                 onChange = { (e)=> dispatch({type : "email" , payload : e.target.value}) } 
-                placeholder="enter email" required />
+                placeholder="enter email" defaultValue = {String(user.email)} required />
             <input type = "radio" name = "gender" value = "male" 
                 onClick = { (e)=> dispatch({type : "gender" , payload : e.currentTarget.value}) } 
                 required /> male
             <input type = "radio" name = "gender" value = "female"
                 onClick = { (e)=> dispatch({"type" : "gender" , payload : e.currentTarget.value}) } 
                 required /> female
-            <input type = "radio" name = "gender" value = "active" 
+            <input type = "radio" name = "status" value = "active" 
                 onClick = { (e)=> dispatch({type : "status" , payload : e.currentTarget.value}) } 
                 required /> active
-            <input type = "radio" name = "gender" value = "inactive"
+            <input type = "radio" name = "status" value = "inactive"
                 onClick = { (e)=> dispatch({"type" : "status" , payload : e.currentTarget.value}) } 
                 required /> inactive
 
