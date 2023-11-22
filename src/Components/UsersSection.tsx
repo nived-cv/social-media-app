@@ -1,7 +1,7 @@
 
 import { Reducer, useReducer, useState } from "react"
 import { UserData } from "../CommonTypes/TypesList1"
-import DataProvider, { useAddUser, useUsers } from "./Apis"
+import  { useAddUser, useUsers } from "./Apis"
 import { User } from "./User"
 
 export type Action = {
@@ -31,7 +31,7 @@ export const UsersSection = () =>{
     const [filter,SetFilter] = useState<String>("all")
     const [display , setDisplay] = useState <boolean> (false)
     const [userData , dispatch] = useReducer <Reducer<UserData, Action>> (reducerUser , {id : 5746762,} as UserData )
-    const mutation = useAddUser()
+    const {mutateAsync: addUser} = useAddUser()
 
     const renderUsers = (data : UserData[], filter : String) =>{
 
@@ -47,12 +47,11 @@ export const UsersSection = () =>{
     }
 
     const createUser = () => {
-
-        mutation.mutate(userData)
+        addUser(userData)
         setDisplay(!display)
     }
     
-    return <DataProvider>
+    return <>
 
         <div className = "users-section">
 
@@ -97,5 +96,5 @@ export const UsersSection = () =>{
             { status ==="success"? renderUsers(data,filter) : "loading..."}
 
         </div>
-    </DataProvider>
+    </>
 }
