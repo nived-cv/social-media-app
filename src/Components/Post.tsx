@@ -19,7 +19,6 @@ export const Post = ({ post }: Props) => {
         <div className="post" key={String(post.id)} >
             <h5 className="post-title">{post.title}</h5>
             <div className="post-body">{post.body}</div>
-
             
             <p className = "fa-solid fa-comments" onClick = { handleClick } /> 
             <div className="post-comments" ref = {commentsRef}>

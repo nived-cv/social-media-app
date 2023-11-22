@@ -12,6 +12,7 @@
     border-radius : 10px;
     background-color: rebeccapurple;
     color: white;
+    cursor : pointer;
 }
 
 .form{

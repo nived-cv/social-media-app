@@ -43,6 +43,12 @@
     border-radius : 12px;
 }
 
-.user-mody-form input[type="text"]{
-    border : 1px solid rebeccapurple;
+.user-modify-form input[type="text"]{
+    border : 1px dashed rebeccapurple;
+    border-radius: 12px;
+}
+
+.spacer-container-min{
+    display : flex;
+    column-gap :10px;
 }

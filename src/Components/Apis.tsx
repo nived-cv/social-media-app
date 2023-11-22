@@ -7,6 +7,7 @@ type Props = {
     children: React.ReactNode
 }
 
+const URL = `https://gorest.co.in/public/v2`
 const headers = {
     headers: { Authorization: "Bearer 681df0d2e2bf3d0b32bcdadc32c20111382302737816d60d7aef8c1816eb0918" }
 }
@@ -28,7 +29,7 @@ const fetchComments = async (id: number) => {
     return data.data
 }
 
-export const useUsers = () => useQuery("users", fetchUsers)
+export const useUsers = () => useQuery(["users"], fetchUsers)
 export const usePosts = () => useQuery("posts", fetchPosts)
 export const useComments = (id: number) => useQuery(['comments', id], () => fetchComments(id))
 
@@ -85,6 +86,20 @@ export const usePatchUser = () => {
             return res
         },
         onSuccess : () => {
+            queryClient.invalidateQueries(["users"])
+        }
+    })
+}
+
+export const useDeleteUser = () => {
+    const queryClient = useQueryClient()
+    return useMutation({
+        mutationFn : async (id : number) => {
+            const res = await axios.delete(`${URL}/users/${id}` , headers)
+            return res
+        },
+        onSuccess : () => {
+            console.log('deleted')
             queryClient.invalidateQueries(["users"])
         }
     })

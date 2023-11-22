@@ -3,7 +3,7 @@ import { Reducer, useReducer, useState } from "react"
 import { PatchUser, UserData } from "../CommonTypes/TypesList1"
 import "../Styles/User.css"
 import { Action } from "./UsersSection"
-import { usePatchUser } from "./Apis"
+import { useDeleteUser, usePatchUser } from "./Apis"
 
 type Props = {
     user : UserData
@@ -31,6 +31,7 @@ export const User = ({user}:Props) =>{
     const [display, setDisplay] = useState <boolean> (false)
     const [userData, dispatch] = useReducer<Reducer<PatchUser,Action>>(reducer,initialValue)
     const mutation = usePatchUser()
+    const mutateDlt = useDeleteUser()
 
     const patchUser = () => {
         mutation.mutate(userData)
@@ -46,7 +47,10 @@ export const User = ({user}:Props) =>{
             </p>
             <p> {user.gender} </p>
             <p> {user.email} </p>
-            <button className = "btn" onClick = {() => setDisplay(!display)}>edit</button>
+            <span className = "spacer-container-min">
+                <button className = "btn" onClick = {() => setDisplay(!display)}>edit</button>
+                <button className = "btn" onClick = {() => mutateDlt.mutateAsync(user.id) }>Delete</button>
+            </span>
 
             { display && 
             <div className = "user-modify-form">
@@ -72,8 +76,11 @@ export const User = ({user}:Props) =>{
                     onClick = { (e)=> dispatch({"type" : "status" , payload : e.currentTarget.value}) } 
                     required /> inactive
             </span>
-            <button className = "btn" onClick = { patchUser }> Create</button>
-            <button className = "btn" onClick = {() => setDisplay(!display)}> Cancel</button>
+            <span style = {{display : "flex" , columnGap : "10px"}}>
+                <button className = "btn" onClick = { patchUser }> Create</button>
+                <button className = "btn" onClick = {() => setDisplay(!display)}> Cancel</button>
+            </span>
+            
         </div>
             }
 
