@@ -39,14 +39,14 @@ export const User = ({user}:Props) =>{
 
     return (
         <div className = "user" key = {Number(user.id)} >
-            <button onClick = {() => setDisplay(!display)}>edit</button>
-
+            
             <p>
                 <span className = "user-name"> {user.name} </span>
                 <span className = {`indicator ${user.status}`} >{user.status}</span>
             </p>
             <p> {user.gender} </p>
             <p> {user.email} </p>
+            <button className = "btn" onClick = {() => setDisplay(!display)}>edit</button>
 
             { display && 
             <div className = "user-modify-form">
@@ -56,21 +56,24 @@ export const User = ({user}:Props) =>{
             <input type = "text" name = "email" 
                 onChange = { (e)=> dispatch({type : "email" , payload : e.target.value}) } 
                 placeholder="enter email" defaultValue = {String(user.email)} required />
-            <input type = "radio" name = "gender" value = "male" 
-                onClick = { (e)=> dispatch({type : "gender" , payload : e.currentTarget.value}) } 
-                required /> male
-            <input type = "radio" name = "gender" value = "female"
-                onClick = { (e)=> dispatch({"type" : "gender" , payload : e.currentTarget.value}) } 
-                required /> female
-            <input type = "radio" name = "status" value = "active" 
-                onClick = { (e)=> dispatch({type : "status" , payload : e.currentTarget.value}) } 
-                required /> active
-            <input type = "radio" name = "status" value = "inactive"
-                onClick = { (e)=> dispatch({"type" : "status" , payload : e.currentTarget.value}) } 
-                required /> inactive
-
-            <button onClick = { patchUser }> Create</button>
-            <button onClick = {() => setDisplay(!display)}> Cancel</button>
+            <span>
+                <input type = "radio" name = "gender" value = "male" 
+                    onClick = { (e)=> dispatch({type : "gender" , payload : e.currentTarget.value}) } 
+                    required /> male
+                <input type = "radio" name = "gender" value = "female"
+                    onClick = { (e)=> dispatch({"type" : "gender" , payload : e.currentTarget.value}) } 
+                    required /> female
+            </span>
+            <span>
+                <input type = "radio" name = "status" value = "active" 
+                    onClick = { (e)=> dispatch({type : "status" , payload : e.currentTarget.value}) } 
+                    required /> active
+                <input type = "radio" name = "status" value = "inactive"
+                    onClick = { (e)=> dispatch({"type" : "status" , payload : e.currentTarget.value}) } 
+                    required /> inactive
+            </span>
+            <button className = "btn" onClick = { patchUser }> Create</button>
+            <button className = "btn" onClick = {() => setDisplay(!display)}> Cancel</button>
         </div>
             }
 

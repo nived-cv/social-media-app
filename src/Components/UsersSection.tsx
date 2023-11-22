@@ -89,8 +89,8 @@ export const UsersSection = () =>{
                     onClick = { (e)=> dispatch({"type" : "status" , payload : e.currentTarget.value}) } 
                     required /> inactive
 
-                <button onClick = {createUser}> Create</button>
-                <button onClick = {() => setDisplay(!display)}> Cancel</button>
+                <button className = "btn" onClick = {createUser}> Create</button>
+                <button className = "btn" onClick = {() => setDisplay(!display)}> Cancel</button>
             </div>
             }
 

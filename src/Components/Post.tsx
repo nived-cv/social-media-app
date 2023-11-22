@@ -2,7 +2,6 @@
 import { useRef, useState } from "react"
 import { PostData } from "../CommonTypes/TypesList1"
 import "../Styles/Post.css"
-import { useComments } from "./Apis"
 import { RenderComments } from "./RenderComments"
 
 type Props = {
@@ -22,7 +21,7 @@ export const Post = ({ post }: Props) => {
             <div className="post-body">{post.body}</div>
 
             
-            <button onClick = { handleClick }> Comments</button>
+            <p className = "fa-solid fa-comments" onClick = { handleClick } /> 
             <div className="post-comments" ref = {commentsRef}>
 
                 {comments ? <RenderComments post = {post}/> : ''}

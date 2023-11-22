@@ -31,3 +31,18 @@
 
     background-color: red;
 }
+
+.user-modify-form{
+
+    display : flex;
+    flex-direction : column;
+    row-gap : 5px;
+    border : 1px dashed grey;
+    margin : 5px;
+    padding:5px;
+    border-radius : 12px;
+}
+
+.user-mody-form input[type="text"]{
+    border : 1px solid rebeccapurple;
+}

@@ -4,6 +4,7 @@ import { NewPostType, PostData } from "../CommonTypes/TypesList1"
 import { useAddPost, usePosts } from "./Apis"
 import { Post } from "./Post"
 import { Action } from "./UsersSection"
+import "../Styles/Home.css"
 
 const reducer = (state : NewPostType , action : Action) => {
 
@@ -59,8 +60,8 @@ export const Home = () =>{
                     onChange = { (e)=> dispatch({type : "body" , payload : e.target.value}) } 
                     placeholder=" say something" required />
         
-                <button type = "submit" onClick = {createPost}> Create</button>
-                <button onClick = {() => setDisplay(!display)}> Cancel</button>
+                <button type = "submit" onClick = {createPost} className = "btn"> Create</button>
+                <button onClick = {() => setDisplay(!display)} className = "btn"> Cancel</button>
             </div>
             }
         </div>

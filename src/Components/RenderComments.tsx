@@ -30,7 +30,7 @@ export const RenderComments = ({post} : Props) =>{
         return <div>
                     { CommentsData.map((comment:CommentsData) => <p className = "comment" key = {comment.id}> { comment.body } </p>) }
                     <input type = "text" className = "comment-in" placeholder = "comment..." ref = {commentObj}/>
-                    <button onClick = { postComment } > Send </button>
+                    <button onClick = { postComment } className = "btn"> Send </button>
                 </div>
 
         if (status === "error")
@@ -41,7 +41,7 @@ export const RenderComments = ({post} : Props) =>{
         return <div>
                     <p className = "comment" > Be the first to comment </p>
                     <input type = "text" placeholder = "comment..." ref = {commentObj}/>
-                    <button onClick = { postComment } > Send </button>
+                    <button onClick = { postComment } className = "btn"> Send </button>
                 </div>
     }
     return <div></div>

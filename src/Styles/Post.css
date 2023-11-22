@@ -19,3 +19,11 @@
 .post-comments.show{
     display:flex;
 }
+
+.fa-comments{
+    color:rebeccapurple;
+}
+
+.fa-comments:hover{
+    color:blueviolet;
+}
