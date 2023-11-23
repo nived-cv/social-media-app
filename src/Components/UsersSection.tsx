@@ -3,6 +3,7 @@ import { Reducer, useReducer, useState } from "react"
 import { UserData } from "../CommonTypes/TypesList1"
 import  { useAddUser, useUsers } from "./Apis"
 import { User } from "./User"
+import "../Styles/UserSection.css"
 
 export type Action = {
     type : string
@@ -64,7 +65,7 @@ export const UsersSection = () =>{
                     <option value= "inactive"> Inactive </option>
                 </select>
 
-                <button onClick = { () => setDisplay(!display) }> + </button>
+                <button className = "btn adduser" onClick = { () => setDisplay(!display) }> + </button>
             </div>
 
             { display && 
@@ -75,18 +76,22 @@ export const UsersSection = () =>{
                 <input type = "text" name = "email" 
                     onChange = { (e)=> dispatch({type : "email" , payload : e.target.value}) } 
                     placeholder="enter email" required />
-                <input type = "radio" name = "gender" value = "male" 
-                    onClick = { (e)=> dispatch({type : "gender" , payload : e.currentTarget.value}) } 
-                    required /> male
-                <input type = "radio" name = "gender" value = "female"
-                    onClick = { (e)=> dispatch({"type" : "gender" , payload : e.currentTarget.value}) } 
-                    required /> female
-                <input type = "radio" name = "active" value = "active" 
-                    onClick = { (e)=> dispatch({type : "status" , payload : e.currentTarget.value}) } 
-                    required /> active
-                <input type = "radio" name = "inactive" value = "inactive"
-                    onClick = { (e)=> dispatch({"type" : "status" , payload : e.currentTarget.value}) } 
-                    required /> inactive
+                <span>
+                    <input type = "radio" name = "gender" value = "male" 
+                        onClick = { (e)=> dispatch({type : "gender" , payload : e.currentTarget.value}) } 
+                        required /> male
+                    <input type = "radio" name = "gender" value = "female"
+                        onClick = { (e)=> dispatch({"type" : "gender" , payload : e.currentTarget.value}) } 
+                        required /> female
+                </span>
+                <span>
+                    <input type = "radio" name = "active" value = "active" 
+                        onClick = { (e)=> dispatch({type : "status" , payload : e.currentTarget.value}) } 
+                        required /> active
+                    <input type = "radio" name = "inactive" value = "inactive"
+                        onClick = { (e)=> dispatch({"type" : "status" , payload : e.currentTarget.value}) } 
+                        required /> inactive
+                </span>
 
                 <button className = "btn" onClick = {createUser}> Create</button>
                 <button className = "btn" onClick = {() => setDisplay(!display)}> Cancel</button>

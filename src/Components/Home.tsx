@@ -30,7 +30,7 @@ export const Home = () =>{
 
     const {data,status} = usePosts()
     const [display, setDisplay] = useState <boolean> (false)
-    const mutation = useAddPost()
+    const {mutateAsync : create_post , status : postStatus} = useAddPost()
 
     const [postData, dispatch] = useReducer<Reducer <NewPostType , Action>>(reducer , initialState)
 
@@ -40,7 +40,12 @@ export const Home = () =>{
 
     const createPost = () =>{
 
-        mutation.mutate(postData)
+        create_post(postData)
+        if(postStatus === 'success'){
+            postData.body = ""
+            postData.title = ""
+        }
+        setDisplay(!display)
     }
 
     return(

@@ -1,6 +1,6 @@
 
 .post{
-    background-color: azure;
+    background-color: lavender;
     display:flex;
     flex-direction:column;
     max-width:60%;
@@ -8,6 +8,11 @@
     padding:15px;
     border-radius: 12px;
     margin-inline:auto;
+    position: relative;
+}
+
+.post h2{
+    font-size: 18px;
 }
 
 .post-comments{
@@ -20,8 +25,23 @@
 
 .fa-comments{
     color:rebeccapurple;
+    width: fit-content;
 }
 
 .fa-comments:hover{
     color:blueviolet;
 }
+
+.fa-comments:active{
+    transform : scale(1.2);
+}
+
+.fa-trash{
+    position : absolute;
+    right : 10px;
+    cursor : pointer;
+    color: rebeccapurple;
+}
+ .fa-trash:active{
+    transform : scale(1.22)
+ }

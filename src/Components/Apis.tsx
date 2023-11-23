@@ -43,8 +43,7 @@ const fetchComments = async (id: number) => {
 
 export const useUsers = () => useQuery(["users"], fetchUsers);
 export const usePosts = () => useQuery("posts", fetchPosts);
-export const useComments = (id: number) =>
-  useQuery(["comments", id], () => fetchComments(id));
+export const useComments = (id: number) => useQuery(["comments", id], () => fetchComments(id));
 
 export const useAddComment = () => {
   const queryClient = useQueryClient();
@@ -54,10 +53,8 @@ export const useAddComment = () => {
       const res = await axios.post(URL, newData, headers);
       return res;
     },
-    onSuccess: () => {
-      queryClient.invalidateQueries(["comments"]);
-    },
-  });
+    onSuccess: () => queryClient.invalidateQueries(["comments"])
+});
 };
 
 export const useAddUser = () => {
@@ -67,15 +64,12 @@ export const useAddUser = () => {
       const URL = `https://gorest.co.in/public/v2/users`;
       try{
       const res = await axios.post(URL, newData, headers);
-      console.log("posted on", URL);
       return res;
       }catch(err){
         alert(err)
       }
     },
-    onSuccess: () => {
-      queryClient.invalidateQueries(["users"]);
-    }
+    onSuccess: () => queryClient.invalidateQueries(["users"])
   });
 };
 
@@ -84,9 +78,14 @@ export const useAddPost = () => {
   return useMutation({
     mutationFn: async (newData: any) => {
       const URL = `https://gorest.co.in/public/v2/posts`;
-      const res = await axios.post(URL, newData, headers);
-      console.log("posted on", URL);
-      return res;
+      try{
+          const res = await axios.post(URL, newData, headers);
+          return res;
+      }
+      catch(err){
+        alert(err)
+        console.log(err)
+      }
     },
     onSuccess: () => queryClient.invalidateQueries(["posts"]),
   });
@@ -115,9 +114,22 @@ export const useDeleteUser = () => {
       const res = await axios.delete(`${URL}/users/${id}`, headers);
       return res;
     },
-    onSuccess: () => {
-      queryClient.invalidateQueries(["users"]);
-      console.log(queryClient.getQueryCache())
-    },
+    onSuccess: () => queryClient.invalidateQueries(["users"])
   });
 };
+
+export const useDeletePost = () => {
+  const queryClient = useQueryClient()
+
+  return useMutation({
+    mutationFn : async (id : number) => {
+      try{
+          const res = await axios.delete(`${URL}/posts/${id}` , headers)
+          return res
+      }catch(err){
+        alert(err)
+      }
+    },
+    onSuccess : () => queryClient.invalidateQueries(["posts"])
+  })
+}
