@@ -1,48 +1,74 @@
-
-import { useRef } from "react"
-import { CommentsData, PostData } from "../CommonTypes/TypesList1"
-import { useAddComment, useComments } from "./Apis"
+import { useRef } from "react";
+import { CommentsData, PostData } from "../CommonTypes/TypesList1";
+import { useCreateComment } from "../Api/comments/useCreateComments";
+import { useGetComments } from "../Api/comments/useGetComments";
 
 type Props = {
-    post : PostData
-}
+  post: PostData;
+};
 
-export const RenderComments = ({post} : Props) =>{
-        
-    const { data: CommentsData,status} = useComments(post.id)
-    const mutation = useAddComment()
+export const RenderComments = ({ post }: Props) => {
+  const { data: CommentsData, status: CommentsStatus } = useGetComments(
+    post.id
+  );
+  const mutation = useCreateComment();
+  const commentObj = useRef<HTMLInputElement>(null);
 
-    const commentObj = useRef <HTMLInputElement> (null)
+  const postComment = () => {
+    const value = commentObj.current!.value;
+    mutation.mutate({
+      id: 0,
+      post_id: post.id,
+      name: "Nived",
+      email: "nived@google.com",
+      body: value,
+    });
+  };
 
-    const postComment = () =>{
-        const value = commentObj.current!.value
-        mutation.mutate({id: 0, post_id : post.id , name : "Nived", email: "nived@google.com" ,body : value})
-    }
+  if (CommentsData) {
+    if (CommentsStatus === "loading")
+      return (
+        <div>
+          <p className="comment"> Loading Comments... </p>
+        </div>
+      );
 
-    if (CommentsData){
+    if (CommentsStatus === "success" && CommentsData.length > 0)
+      return (
+        <div>
+          {CommentsData.map((comment: CommentsData) => (
+            <p className="comment" key={comment.id}>
+              {comment.body}
+            </p>
+          ))}
+          <input
+            type="text"
+            className="comment-in"
+            placeholder="comment..."
+            ref={commentObj}
+          />
+          <button onClick={postComment} className="btn">
+            Send
+          </button>
+        </div>
+      );
 
-        if (status === "loading")
-        return <div>
-                    <p className = "comment"> Loading Comments... </p>
-                </div>
+    if (CommentsStatus === "error")
+      return (
+        <div>
+          <p className="comment"> Error fetching comments !! </p>
+        </div>
+      );
 
-        if (status === "success" && CommentsData.length > 0)
-        return <div>
-                    { CommentsData.map((comment:CommentsData) => <p className = "comment" key = {comment.id}> { comment.body } </p>) }
-                    <input type = "text" className = "comment-in" placeholder = "comment..." ref = {commentObj}/>
-                    <button onClick = { postComment } className = "btn"> Send </button>
-                </div>
-
-        if (status === "error")
-        return <div>
-                    <p className = "comment"> Error fetching comments !! </p>
-                </div>
-
-        return <div>
-                    <p className = "comment" > Be the first to comment </p>
-                    <input type = "text" placeholder = "comment..." ref = {commentObj}/>
-                    <button onClick = { postComment } className = "btn"> Send </button>
-                </div>
-    }
-    return <div></div>
-}
+    return (
+      <div>
+        <p className="comment"> Be the first to comment </p>
+        <input type="text" placeholder="comment..." ref={commentObj} />
+        <button onClick={postComment} className="btn">
+          Send
+        </button>
+      </div>
+    );
+  }
+  return <div></div>;
+};

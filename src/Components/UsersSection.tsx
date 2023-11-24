@@ -1,105 +1,158 @@
-
-import { Reducer, useReducer, useState } from "react"
-import { UserData } from "../CommonTypes/TypesList1"
-import  { useAddUser, useUsers } from "./Apis"
-import { User } from "./User"
-import "../Styles/UserSection.css"
+import { Reducer, useReducer, useState } from "react";
+import { UserData } from "../CommonTypes/TypesList1";
+import { User } from "./User";
+import "../Styles/UserSection.css";
+import { useCreateUser } from "../Api/users/useCreateUser";
+import { useGetUsers } from "../Api/users/useGetUsers";
 
 export type Action = {
-    type : string
-    payload : string
-}
+  type: string;
+  payload: string;
+};
 
-export const reducerUser = (state : UserData , action : Action ) => {
+export const reducerUser = (state: UserData, action: Action) => {
+  switch (action.type) {
+    case "name":
+      state.name = action.payload;
+      return { ...state };
+    case "email":
+      state.email = action.payload;
+      return { ...state };
+    case "gender":
+      state.gender = (action.payload as "male") || "female";
+      return { ...state };
+    case "status":
+      state.status = action.payload;
+      return { ...state };
+    default:
+      return { ...state };
+  }
+};
 
-    switch(action.type){
+export const UsersSection = () => {
+  const { data, status } = useGetUsers();
+  const [filter, SetFilter] = useState<String>("all");
+  const [display, setDisplay] = useState<boolean>(false);
+  const [userData, dispatch] = useReducer<Reducer<UserData, Action>>(
+    reducerUser,
+    { id: 5746762 } as UserData
+  );
+  const { mutateAsync: addUser } = useCreateUser();
 
-        case "name" : state.name = action.payload
-                       return {...state}
-        case "email" : state.email = action.payload
-                       return {...state}
-        case "gender" : state.gender = action.payload as "male" || "female"
-                       return {...state}
-        case "status" : state.status = action.payload
-                       return {...state}
-        default : return {...state}
-    }
-}
+  const renderUsers = (data: UserData[], filter: String) => {
+    if (filter === "all")
+      return data.map((user) => <User user={user} key={user.id} />);
 
-export const UsersSection = () =>{
+    // eslint-disable-next-line
+    return data.map((user) => {
+      if (user.status === filter) return <User user={user} key={user.id} />;
+    });
+  };
 
-    const {data,status} = useUsers()
-    const [filter,SetFilter] = useState<String>("all")
-    const [display , setDisplay] = useState <boolean> (false)
-    const [userData , dispatch] = useReducer <Reducer<UserData, Action>> (reducerUser , {id : 5746762,} as UserData )
-    const {mutateAsync: addUser} = useAddUser()
+  const createUser = () => {
+    addUser(userData);
+    setDisplay(!display);
+  };
 
-    const renderUsers = (data : UserData[], filter : String) =>{
+  return (
+    <>
+      <div className="users-section">
+        <div className="panel-tab">
+          <h2> Your Users </h2>
 
-        if(filter === "all")
-        return data.map((user) => <User user = {user} key = {user.id}/>)
+          <select
+            onClick={(e) => SetFilter(e.currentTarget.value)}
+            defaultValue="all"
+          >
+            <option value="all"> All </option>
+            <option value="active"> Active </option>
+            <option value="inactive"> Inactive </option>
+          </select>
 
-        // eslint-disable-next-line 
-        return data.map((user) => {
-
-            if(user.status === filter)
-            return <User user = {user} key = {user.id}/>
-        })
-    }
-
-    const createUser = () => {
-        addUser(userData)
-        setDisplay(!display)
-    }
-    
-    return <>
-
-        <div className = "users-section">
-
-            <div className = "panel-tab">
-                <h2> Your Users </h2>
-
-                <select onClick = {(e) => SetFilter(e.currentTarget.value)} defaultValue = "all" >
-                    <option value="all"> All </option>
-                    <option value= "active"> Active </option>
-                    <option value= "inactive"> Inactive </option>
-                </select>
-
-                <button className = "btn adduser" onClick = { () => setDisplay(!display) }> + </button>
-            </div>
-
-            { display && 
-            <div className = "form">
-                <input type = "text" name = "name" 
-                    onChange = { (e)=> dispatch({type : "name" , payload : e.target.value}) } 
-                    placeholder="enter name" required />
-                <input type = "text" name = "email" 
-                    onChange = { (e)=> dispatch({type : "email" , payload : e.target.value}) } 
-                    placeholder="enter email" required />
-                <span>
-                    <input type = "radio" name = "gender" value = "male" 
-                        onClick = { (e)=> dispatch({type : "gender" , payload : e.currentTarget.value}) } 
-                        required /> male
-                    <input type = "radio" name = "gender" value = "female"
-                        onClick = { (e)=> dispatch({"type" : "gender" , payload : e.currentTarget.value}) } 
-                        required /> female
-                </span>
-                <span>
-                    <input type = "radio" name = "active" value = "active" 
-                        onClick = { (e)=> dispatch({type : "status" , payload : e.currentTarget.value}) } 
-                        required /> active
-                    <input type = "radio" name = "inactive" value = "inactive"
-                        onClick = { (e)=> dispatch({"type" : "status" , payload : e.currentTarget.value}) } 
-                        required /> inactive
-                </span>
-
-                <button className = "btn" onClick = {createUser}> Create</button>
-                <button className = "btn" onClick = {() => setDisplay(!display)}> Cancel</button>
-            </div>
-            }
-
-            { status ==="success"? renderUsers(data,filter) : "loading..."}
-
+          <button className="btn adduser" onClick={() => setDisplay(!display)}>
+            {" "}
+            +{" "}
+          </button>
         </div>
+
+        {display && (
+          <div className="form">
+            <input
+              type="text"
+              name="name"
+              onChange={(e) =>
+                dispatch({ type: "name", payload: e.target.value })
+              }
+              placeholder="enter name"
+              required
+            />
+            <input
+              type="text"
+              name="email"
+              onChange={(e) =>
+                dispatch({ type: "email", payload: e.target.value })
+              }
+              placeholder="enter email"
+              required
+            />
+            <span>
+              <input
+                type="radio"
+                name="gender"
+                value="male"
+                onClick={(e) =>
+                  dispatch({ type: "gender", payload: e.currentTarget.value })
+                }
+                required
+              />{" "}
+              male
+              <input
+                type="radio"
+                name="gender"
+                value="female"
+                onClick={(e) =>
+                  dispatch({ type: "gender", payload: e.currentTarget.value })
+                }
+                required
+              />{" "}
+              female
+            </span>
+            <span>
+              <input
+                type="radio"
+                name="active"
+                value="active"
+                onClick={(e) =>
+                  dispatch({ type: "status", payload: e.currentTarget.value })
+                }
+                required
+              />{" "}
+              active
+              <input
+                type="radio"
+                name="inactive"
+                value="inactive"
+                onClick={(e) =>
+                  dispatch({ type: "status", payload: e.currentTarget.value })
+                }
+                required
+              />{" "}
+              inactive
+            </span>
+
+            <button className="btn" onClick={createUser}>
+              {" "}
+              Create
+            </button>
+            <button className="btn" onClick={() => setDisplay(!display)}>
+              {" "}
+              Cancel
+            </button>
+          </div>
+        )}
+
+        {status === "success" ? renderUsers(data, filter) : "loading..."}
+      </div>
     </>
-}
+  );
+};
