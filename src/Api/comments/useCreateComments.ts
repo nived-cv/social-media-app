@@ -9,7 +9,7 @@ export const useCreateComment = () => {
   return useMutation({
     mutationFn: async (newData: CommentsData) => {
       const res = await axiosClientWithAuth.post(
-        apiUrls.addComment(newData.id),
+        apiUrls.addComment(newData.post_id),
         newData
       );
       return res;

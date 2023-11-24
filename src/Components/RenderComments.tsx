@@ -15,13 +15,14 @@ export const RenderComments = ({ post }: Props) => {
   const commentObj = useRef<HTMLInputElement>(null);
 
   const postComment = () => {
-    const value = commentObj.current!.value;
+    const msg = commentObj.current!.value;
+    console.log(post.id);
     mutation.mutate({
       id: 0,
       post_id: post.id,
       name: "Nived",
       email: "nived@google.com",
-      body: value,
+      body: msg,
     });
   };
 

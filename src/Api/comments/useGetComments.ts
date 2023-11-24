@@ -4,7 +4,7 @@ import { axiosClientWithAuth } from "../axiosClient";
 import { dataQueryKeys } from "../dataQueryClient";
 
 const fetchComments = async (id: number) => {
-  const data = await axiosClientWithAuth.get(apiUrls.getComment());
+  const data = await axiosClientWithAuth.get(apiUrls.getComment(id));
   return data.data;
 };
 

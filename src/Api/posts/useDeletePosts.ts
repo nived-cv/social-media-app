@@ -9,7 +9,7 @@ export const useDeletePost = () => {
   return useMutation({
     mutationFn: async (id: number) => {
       try {
-        const res = await axiosClientWithAuth.delete(apiUrls.getPost());
+        const res = await axiosClientWithAuth.delete(apiUrls.getPost(id));
         return res;
       } catch (err) {
         alert(err);

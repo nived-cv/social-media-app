@@ -1,7 +1,7 @@
 export const apiUrls = {
-  getComment: () => "/comment",
+  getComment: (id: number) => `/posts/${id}/comments/`,
   addComment: (id: number) => `/posts/${id}/comments`,
-  getPost: () => `/posts`,
+  getPost: (id: number) => `/posts/${id}`,
   getPosts: () => `/posts`,
   getUser: (id: number | undefined) => `/users/${id}`,
   getUsers: () => `/users`,
