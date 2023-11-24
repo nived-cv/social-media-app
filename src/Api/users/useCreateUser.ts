@@ -9,10 +9,7 @@ export const useCreateUser = () => {
   return useMutation({
     mutationFn: async (newData: UserData) => {
       try {
-        const res = await axiosClientWithAuth.post(
-          apiUrls.getUser(newData.id),
-          newData
-        );
+        const res = await axiosClientWithAuth.post(apiUrls.getUsers(), newData);
         return res;
       } catch (err) {
         alert(err);

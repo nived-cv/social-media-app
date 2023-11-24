@@ -32,7 +32,7 @@ export const reducerUser = (state: UserData, action: Action) => {
 export const UsersSection = () => {
   const { data, status } = useGetUsers();
   const [filter, SetFilter] = useState<String>("all");
-  const [display, setDisplay] = useState<boolean>(false);
+  const [displayForm, setDisplayForm] = useState<boolean>(false);
   const [userData, dispatch] = useReducer<Reducer<UserData, Action>>(
     reducerUser,
     { id: 5746762 } as UserData
@@ -51,7 +51,7 @@ export const UsersSection = () => {
 
   const createUser = () => {
     addUser(userData);
-    setDisplay(!display);
+    setDisplayForm(!displayForm);
   };
 
   return (
@@ -69,13 +69,15 @@ export const UsersSection = () => {
             <option value="inactive"> Inactive </option>
           </select>
 
-          <button className="btn adduser" onClick={() => setDisplay(!display)}>
-            {" "}
-            +{" "}
+          <button
+            className="btn adduser"
+            onClick={() => setDisplayForm(!displayForm)}
+          >
+            +
           </button>
         </div>
 
-        {display && (
+        {displayForm && (
           <div className="form">
             <input
               type="text"
@@ -104,7 +106,7 @@ export const UsersSection = () => {
                   dispatch({ type: "gender", payload: e.currentTarget.value })
                 }
                 required
-              />{" "}
+              />
               male
               <input
                 type="radio"
@@ -114,7 +116,7 @@ export const UsersSection = () => {
                   dispatch({ type: "gender", payload: e.currentTarget.value })
                 }
                 required
-              />{" "}
+              />
               female
             </span>
             <span>
@@ -126,7 +128,7 @@ export const UsersSection = () => {
                   dispatch({ type: "status", payload: e.currentTarget.value })
                 }
                 required
-              />{" "}
+              />
               active
               <input
                 type="radio"
@@ -136,16 +138,17 @@ export const UsersSection = () => {
                   dispatch({ type: "status", payload: e.currentTarget.value })
                 }
                 required
-              />{" "}
+              />
               inactive
             </span>
 
             <button className="btn" onClick={createUser}>
-              {" "}
               Create
             </button>
-            <button className="btn" onClick={() => setDisplay(!display)}>
-              {" "}
+            <button
+              className="btn"
+              onClick={() => setDisplayForm(!displayForm)}
+            >
               Cancel
             </button>
           </div>
