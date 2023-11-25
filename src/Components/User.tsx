@@ -3,6 +3,7 @@ import { PatchUser, UserData } from "../types";
 import "../styles/User.css";
 import { Action } from "./UsersSection";
 import { useDeleteUser, useUpdateUser } from "../api/users";
+import { CustomButton } from "./common";
 
 type Props = {
   user: UserData;
@@ -42,6 +43,10 @@ export const User = ({ user }: Props) => {
     deleteUser(user.id);
   }
 
+  const toggleDisplayForm = () => {
+    setDisplayForm(!displayForm);
+  };
+
   return (
     <div className="user" key={Number(user.id)}>
       <p>
@@ -51,12 +56,16 @@ export const User = ({ user }: Props) => {
       <p> {user.gender} </p>
       <p> {user.email} </p>
       <span className="spacer-container-min">
-        <button className="btn" onClick={() => setDisplayForm(!displayForm)}>
-          edit
-        </button>
-        <button className="btn" onClick={handleDelete}>
-          Delete
-        </button>
+        <CustomButton
+          className="btn"
+          handleClick={toggleDisplayForm}
+          buttonText="save"
+        />
+        <CustomButton
+          className="btn"
+          handleClick={handleDelete}
+          buttonText="Delete"
+        />
       </span>
 
       {displayForm && (
@@ -126,15 +135,16 @@ export const User = ({ user }: Props) => {
             inactive
           </span>
           <span style={{ display: "flex", columnGap: "10px" }}>
-            <button className="btn" onClick={patchUser}>
-              Create
-            </button>
-            <button
+            <CustomButton
               className="btn"
-              onClick={() => setDisplayForm(!displayForm)}
-            >
-              Cancel
-            </button>
+              handleClick={patchUser}
+              buttonText="Create"
+            />
+            <CustomButton
+              className="btn"
+              handleClick={toggleDisplayForm}
+              buttonText="delete"
+            />
           </span>
         </div>
       )}

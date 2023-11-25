@@ -1,6 +1,7 @@
 import { useRef } from "react";
 import { CommentsData, PostData } from "../types";
 import { useCreateComment, useGetComments } from "../api/comments";
+import { CustomButton } from "./common";
 
 type Props = {
   post: PostData;
@@ -47,9 +48,11 @@ export const RenderComments = ({ post }: Props) => {
             placeholder="comment..."
             ref={commentObj}
           />
-          <button onClick={postComment} className="btn">
-            Send
-          </button>
+          <CustomButton
+            handleClick={postComment}
+            className="btn"
+            buttonText="Send"
+          />
         </div>
       );
 
@@ -64,9 +67,11 @@ export const RenderComments = ({ post }: Props) => {
       <div>
         <p className="comment"> Be the first to comment </p>
         <input type="text" placeholder="comment..." ref={commentObj} />
-        <button onClick={postComment} className="btn">
-          Send
-        </button>
+        <CustomButton
+          handleClick={postComment}
+          className="btn"
+          buttonText="Send"
+        />
       </div>
     );
   }

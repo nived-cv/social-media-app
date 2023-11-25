@@ -3,6 +3,7 @@ import { UserData } from "../types";
 import { User } from "./User";
 import "../styles/UserSection.css";
 import { useCreateUser, useGetUsers } from "../api/users";
+import { CustomButton } from "./common";
 
 export type Action = {
   type: string;
@@ -53,6 +54,8 @@ export const UsersSection = () => {
     setDisplayForm(!displayForm);
   };
 
+  const toggleDisplayForm = () => setDisplayForm(!displayForm);
+
   return (
     <>
       <div className="users-section">
@@ -68,12 +71,11 @@ export const UsersSection = () => {
             <option value="inactive"> Inactive </option>
           </select>
 
-          <button
-            className="btn adduser"
-            onClick={() => setDisplayForm(!displayForm)}
-          >
-            +
-          </button>
+          <CustomButton
+            buttonText="+"
+            className="btn addUser"
+            handleClick={toggleDisplayForm}
+          />
         </div>
 
         {displayForm && (

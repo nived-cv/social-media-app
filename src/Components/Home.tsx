@@ -1,6 +1,7 @@
 import { Reducer, useReducer, useState } from "react";
 import { NewPostType, PostData } from "../types";
 import { useCreatePost, useGetPosts } from "../api/posts";
+import { CustomButton } from "./common";
 import { Post } from "./Post";
 import { Action } from "./UsersSection";
 import "../styles/Home.css";
@@ -88,13 +89,13 @@ export const Home = () => {
             required
           />
 
-          <CustomeButton
+          <CustomButton
             buttonText="Submit"
             handleClick={handleCreatePost}
             type="submit"
             className="btn"
           />
-          <CustomeButton
+          <CustomButton
             buttonText="Cancel"
             handleClick={handleToggleModal}
             className="btn"
@@ -102,25 +103,5 @@ export const Home = () => {
         </div>
       )}
     </div>
-  );
-};
-
-type CustomeButtonProps = {
-  buttonText: string;
-  handleClick: () => void;
-  type?: "button" | "submit" | "reset" | undefined;
-  className: string;
-};
-
-const CustomeButton = ({
-  buttonText,
-  handleClick,
-  type,
-  className,
-}: CustomeButtonProps) => {
-  return (
-    <button onClick={handleClick} className={className} type={type}>
-      {buttonText}
-    </button>
   );
 };
