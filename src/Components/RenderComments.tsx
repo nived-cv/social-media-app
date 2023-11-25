@@ -11,13 +11,13 @@ export const RenderComments = ({ post }: Props) => {
   const { data: CommentsData, status: CommentsStatus } = useGetComments(
     post.id
   );
-  const mutation = useCreateComment();
+  const { mutateAsync: addComment } = useCreateComment();
   const commentObj = useRef<HTMLInputElement>(null);
 
   const postComment = () => {
     const msg = commentObj.current!.value;
     console.log(post.id);
-    mutation.mutate({
+    addComment({
       id: 0,
       post_id: post.id,
       name: "Nived",
