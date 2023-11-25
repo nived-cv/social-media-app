@@ -1,8 +1,8 @@
 import { useRef, useState } from "react";
-import { PostData } from "../CommonTypes/TypesList1";
-import "../Styles/Post.css";
+import { PostData } from "../types";
+import "../styles/Post.css";
 import { RenderComments } from "./RenderComments";
-import { useDeletePost } from "../Api/posts/useDeletePosts";
+import { useDeletePost } from "../api/posts";
 
 type Props = {
   post: PostData;

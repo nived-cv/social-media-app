@@ -1,7 +1,6 @@
 import { useRef } from "react";
-import { CommentsData, PostData } from "../CommonTypes/TypesList1";
-import { useCreateComment } from "../Api/comments/useCreateComments";
-import { useGetComments } from "../Api/comments/useGetComments";
+import { CommentsData, PostData } from "../types";
+import { useCreateComment, useGetComments } from "../api/comments";
 
 type Props = {
   post: PostData;

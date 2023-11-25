@@ -1,9 +1,8 @@
 import { Reducer, useReducer, useState } from "react";
-import { UserData } from "../CommonTypes/TypesList1";
+import { UserData } from "../types";
 import { User } from "./User";
-import "../Styles/UserSection.css";
-import { useCreateUser } from "../Api/users/useCreateUser";
-import { useGetUsers } from "../Api/users/useGetUsers";
+import "../styles/UserSection.css";
+import { useCreateUser, useGetUsers } from "../api/users";
 
 export type Action = {
   type: string;

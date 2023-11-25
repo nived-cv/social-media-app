@@ -1,10 +1,9 @@
 import { Reducer, useReducer, useState } from "react";
-import { NewPostType, PostData } from "../CommonTypes/TypesList1";
-import { useCreatePost } from "../Api/posts/useCreatePosts";
-import { useGetPosts } from "../Api/posts/useGetPosts";
+import { NewPostType, PostData } from "../types";
+import { useCreatePost, useGetPosts } from "../api/posts";
 import { Post } from "./Post";
 import { Action } from "./UsersSection";
-import "../Styles/Home.css";
+import "../styles/Home.css";
 
 const reducer = (state: NewPostType, action: Action) => {
   switch (action.type) {
@@ -27,10 +26,14 @@ const initialState = {
   body: "",
 };
 
+enum RequestStatus {
+  SUCCESS = "success",
+}
+
 export const Home = () => {
-  const { data: posts, status } = useGetPosts();
-  const [showForm, setShowForm] = useState<boolean>(false);
-  const { mutateAsync: addPost, status: postStatus } = useCreatePost();
+  const { data: posts, status: getPostStatus } = useGetPosts();
+  const [isModalOpen, setIsModalOpen] = useState<boolean>(false);
+  const { mutateAsync: addPost, status: createPostStatus } = useCreatePost();
 
   const [postData, dispatch] = useReducer<Reducer<NewPostType, Action>>(
     reducer,
@@ -43,23 +46,28 @@ export const Home = () => {
     ));
   };
 
-  const createPost = () => {
+  const handleCreatePost = () => {
     addPost(postData);
-    if (postStatus === "success") {
+    if (createPostStatus === RequestStatus.SUCCESS) {
       dispatch({ type: "clear", payload: "" });
     }
-    setShowForm(!showForm);
+    setIsModalOpen(!isModalOpen);
+  };
+  const handleToggleModal = () => {
+    setIsModalOpen(!isModalOpen);
   };
 
   return (
     <div className="Home">
-      {status === "success" ? renderPosts(posts) : "loading..."}
+      {getPostStatus === RequestStatus.SUCCESS
+        ? renderPosts(posts)
+        : "loading..."}
 
-      <button onClick={() => setShowForm(!showForm)} className="btn addPost">
+      <button onClick={handleToggleModal} className="btn addPost">
         Create Post
       </button>
 
-      {showForm && (
+      {isModalOpen && (
         <div className="form">
           <input
             type="text"
@@ -80,14 +88,39 @@ export const Home = () => {
             required
           />
 
-          <button type="submit" onClick={createPost} className="btn">
-            Create
-          </button>
-          <button onClick={() => setShowForm(!showForm)} className="btn">
-            Cancel
-          </button>
+          <CustomeButton
+            buttonText="Submit"
+            handleClick={handleCreatePost}
+            type="submit"
+            className="btn"
+          />
+          <CustomeButton
+            buttonText="Cancel"
+            handleClick={handleToggleModal}
+            className="btn"
+          />
         </div>
       )}
     </div>
+  );
+};
+
+type CustomeButtonProps = {
+  buttonText: string;
+  handleClick: () => void;
+  type?: "button" | "submit" | "reset" | undefined;
+  className: string;
+};
+
+const CustomeButton = ({
+  buttonText,
+  handleClick,
+  type,
+  className,
+}: CustomeButtonProps) => {
+  return (
+    <button onClick={handleClick} className={className} type={type}>
+      {buttonText}
+    </button>
   );
 };

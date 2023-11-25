@@ -1,9 +1,8 @@
 import { Reducer, useReducer, useState } from "react";
-import { PatchUser, UserData } from "../CommonTypes/TypesList1";
-import "../Styles/User.css";
+import { PatchUser, UserData } from "../types";
+import "../styles/User.css";
 import { Action } from "./UsersSection";
-import { useDeleteUser } from "../Api/users/useDeleteUser";
-import { useUpdateUser } from "../Api/users/useUpdateUser";
+import { useDeleteUser, useUpdateUser } from "../api/users";
 
 type Props = {
   user: UserData;

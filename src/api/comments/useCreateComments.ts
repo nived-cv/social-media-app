@@ -2,7 +2,7 @@ import { useMutation, useQueryClient } from "react-query";
 import { axiosClientWithAuth } from "../axiosClient";
 import { apiUrls } from "../apiUrls";
 import { dataQueryKeys } from "../dataQueryClient";
-import { CommentsData } from "../../CommonTypes/TypesList1";
+import { CommentsData } from "../../types";
 
 export const useCreateComment = () => {
   const queryClient = useQueryClient();

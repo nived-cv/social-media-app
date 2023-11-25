@@ -1,5 +1,5 @@
 import { useMutation, useQueryClient } from "react-query";
-import { PatchUser } from "../../CommonTypes/TypesList1";
+import { PatchUser } from "../../types";
 import { axiosClientWithAuth } from "../axiosClient";
 import { apiUrls } from "../apiUrls";
 import { dataQueryKeys } from "../dataQueryClient";

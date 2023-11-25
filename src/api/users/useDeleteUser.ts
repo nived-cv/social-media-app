@@ -8,7 +8,7 @@ export const useDeleteUser = () => {
 
   return useMutation({
     mutationFn: async (id: number) => {
-      const res = await axiosClientWithAuth(apiUrls.getUser(id));
+      const res = await axiosClientWithAuth.delete(apiUrls.getUser(id));
       return res;
     },
     onSuccess: () => queryClient.invalidateQueries(dataQueryKeys.USERS),

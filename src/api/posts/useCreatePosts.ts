@@ -1,7 +1,7 @@
 import { useMutation, useQueryClient } from "react-query";
 import { axiosClientWithAuth } from "../axiosClient";
 import { apiUrls } from "../apiUrls";
-import { PostData } from "../../CommonTypes/TypesList1";
+import { PostData } from "../../types";
 import { dataQueryKeys } from "../dataQueryClient";
 
 export const useCreatePost = () => {
