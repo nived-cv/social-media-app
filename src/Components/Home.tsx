@@ -54,6 +54,7 @@ export const Home = () => {
     }
     setIsModalOpen(!isModalOpen);
   };
+  
   const handleToggleModal = () => {
     setIsModalOpen(!isModalOpen);
   };

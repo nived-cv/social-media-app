@@ -10,6 +10,7 @@ type Props = {
 
 export const Post = ({ post }: Props) => {
   const commentsRef = useRef<HTMLDivElement>(null);
+  
   const dltRef = useRef<HTMLDivElement>(null);
   const [comments, setComments] = useState<boolean>(false);
   const { mutateAsync: deletePost } = useDeletePost();

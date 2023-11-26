@@ -76,7 +76,7 @@ export const User = ({ user }: Props) => {
             onChange={(e) =>
               dispatch({ type: "name", payload: e.target.value })
             }
-            placeholder="enter name"
+            placeholder="Enter name"
             defaultValue={String(user.name)}
             required
           />
@@ -86,7 +86,7 @@ export const User = ({ user }: Props) => {
             onChange={(e) =>
               dispatch({ type: "email", payload: e.target.value })
             }
-            placeholder="enter email"
+            placeholder="Enter email"
             defaultValue={String(user.email)}
             required
           />

@@ -8,7 +8,7 @@ type Props = {
 };
 
 export const RenderComments = ({ post }: Props) => {
-  const { data: CommentsData, status: CommentsStatus } = useGetComments(
+  const { data: commentsData, status: loadingStatus } = useGetComments(
     post.id
   );
   const { mutateAsync: addComment } = useCreateComment();
@@ -16,7 +16,6 @@ export const RenderComments = ({ post }: Props) => {
 
   const postComment = () => {
     const msg = commentObj.current!.value;
-    console.log(post.id);
     addComment({
       id: 0,
       post_id: post.id,
@@ -26,47 +25,41 @@ export const RenderComments = ({ post }: Props) => {
     });
   };
 
-  if (CommentsData) {
-    if (CommentsStatus === "loading")
-      return (
-        <div>
-          <p className="comment"> Loading Comments... </p>
-        </div>
-      );
+  if(!commentsData) {
+    return <div></div>;
+  }
 
-    if (CommentsStatus === "success" && CommentsData.length > 0)
-      return (
-        <div>
-          {CommentsData.map((comment: CommentsData) => (
-            <p className="comment" key={comment.id}>
-              {comment.body}
-            </p>
-          ))}
-          <input
-            type="text"
-            className="comment-in"
-            placeholder="comment..."
-            ref={commentObj}
-          />
-          <CustomButton
-            handleClick={postComment}
-            className="btn"
-            buttonText="Send"
-          />
-        </div>
-      );
-
-    if (CommentsStatus === "error")
-      return (
-        <div>
-          <p className="comment"> Error fetching comments !! </p>
-        </div>
-      );
-
+  if (loadingStatus === "loading") {
     return (
       <div>
-        <p className="comment"> Be the first to comment </p>
-        <input type="text" placeholder="comment..." ref={commentObj} />
+        <p className="comment"> Loading Comments... </p>
+      </div>
+    );
+  }
+
+  if (loadingStatus === "error") {
+    return (
+      <div>
+        <p className="comment"> Error fetching comments !! </p>
+      </div>
+    );
+  }
+
+
+  if (loadingStatus === "success" && commentsData.length > 0) {
+    return (
+      <div>
+        {commentsData.map((comment: CommentsData) => (
+          <p className="comment" key={comment.id}>
+            {comment.body}
+          </p>
+        ))}
+        <input
+          type="text"
+          className="comment-in"
+          placeholder="comment..."
+          ref={commentObj}
+        />
         <CustomButton
           handleClick={postComment}
           className="btn"
@@ -75,5 +68,17 @@ export const RenderComments = ({ post }: Props) => {
       </div>
     );
   }
-  return <div></div>;
+
+  return (
+    <div>
+      <p className="comment"> Be the first to comment </p>
+      <input type="text" placeholder="comment..." ref={commentObj} />
+      <CustomButton
+        handleClick={postComment}
+        className="btn"
+        buttonText="Send"
+      />
+    </div>
+  );
+
 };

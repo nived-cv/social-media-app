@@ -31,7 +31,7 @@ export const reducerUser = (state: UserData, action: Action) => {
 
 export const UsersSection = () => {
   const { data, status } = useGetUsers();
-  const [filter, SetFilter] = useState<String>("all");
+  const [filter, setFilter] = useState<String>("all");
   const [displayForm, setDisplayForm] = useState<boolean>(false);
   const [userData, dispatch] = useReducer<Reducer<UserData, Action>>(
     reducerUser,
@@ -61,9 +61,8 @@ export const UsersSection = () => {
       <div className="users-section">
         <div className="panel-tab">
           <h2> Your Users </h2>
-
           <select
-            onClick={(e) => SetFilter(e.currentTarget.value)}
+            onClick={(e) => setFilter(e.currentTarget.value)}
             defaultValue="all"
           >
             <option value="all"> All </option>
