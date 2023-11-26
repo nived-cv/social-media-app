@@ -1,0 +1,51 @@
+.user {
+  border: 1px solid whitesmoke;
+  margin: 10px;
+  padding: 15px;
+  border-radius: 10px;
+  box-shadow: 1px 3px 8px rgba(0, 0, 0, 0.3);
+  width: 40vw;
+  cursor: pointer;
+}
+
+.user:hover {
+  transform: scale(1.01);
+}
+
+.indicator {
+  padding: 5px 8px;
+  margin-left: 10px;
+  font-size: 14px;
+  border-radius: 30px;
+  width: fit-content;
+  color: white;
+  font-weight: bold;
+}
+
+.indicator.active {
+  background-color: green;
+}
+
+.indicator.inactive {
+  background-color: red;
+}
+
+.user-modify-form {
+  display: flex;
+  flex-direction: column;
+  row-gap: 5px;
+  border: 1px dashed grey;
+  margin: 5px;
+  padding: 5px;
+  border-radius: 12px;
+}
+
+.user-modify-form input[type="text"] {
+  border: 1px dashed rebeccapurple;
+  border-radius: 12px;
+}
+
+.spacer-container-min {
+  display: flex;
+  column-gap: 10px;
+}

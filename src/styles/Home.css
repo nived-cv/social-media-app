@@ -1,0 +1,45 @@
+
+.btn.addPost {
+    position: fixed;
+    bottom : 20px;
+    right:20px;
+}
+
+.btn{
+    outline: 0;
+    border : 0;
+    padding: 8px 12px;
+    border-radius : 10px;
+    background-color: rebeccapurple;
+    color: white;
+    cursor : pointer;
+}
+
+.btn:active{
+    transform : scale(.96);
+}
+
+.form{
+    position : fixed;
+    top:0;
+    left:0;
+    z-index: 1;
+    background-color:rgba(0,0,0,0.3);
+    width:100%;
+    height:100%;
+    display: flex;
+    flex-direction: column;
+    row-gap: 20px;
+    justify-content: center;
+    align-items: center;
+}
+
+input[type="text"]{
+    
+    border : 0;
+    padding : 5px 12px;
+}
+
+input[type="text"]:focus{
+    outline : 2px solid rebeccapurple;
+}
